@@ -1,0 +1,542 @@
+
+
+
+
+# # version: "3.1"
+
+# # stories:
+
+# # # ====================================
+# # # A. FUNCTIONAL TESTING: HAPPY PATHS
+# # # ====================================
+
+# # # - story: Check balance happy path
+# # #   steps:
+# # #   - intent: check_balance
+# # #   - action: balance_form
+# # #   - active_loop: balance_form
+# # #   # User provides all required slots (account_type and account_number)
+# # #   - intent: inform
+# # #     entities:
+# # #     - account_type: "savings"
+# # #     - account_number: "123456789"
+# # #   # Form finishes, active_loop ends, and submission rule is triggered
+# # #   - active_loop: null
+# # #   - action: action_check_balance
+
+# # # - story: Transfer money happy path
+# # #   steps:
+# # #   - intent: transfer_money
+# # #   - action: transfer_form
+# # #   - active_loop: transfer_form
+# # #   # User provides initial slots
+# # #   - intent: inform
+# # #     entities:
+# # #     - recipient_name: "Trushali"
+# # #     - account_type: "current"
+# # #     - account_number: "987654321"
+# # #     - amount: 50.00
+# # #   # User confirms the transfer (fills the boolean slot transfer_confirmed)
+# # #   - intent: affirm 
+# # #   - active_loop: null
+# # #   - action: action_transfer_money
+
+
+
+# # # - story: Pay bill happy path
+# # #   steps:
+# # #   - intent: pay_bill
+# # #   - action: bill_payment_form
+# # #   - active_loop: bill_payment_form
+# # #   # User provides initial slots
+# # #   - intent: inform
+# # #     entities:
+# # #     - bill_type: "electricity"
+# # #     - amount: 150.00
+# # #     - account_number: "112233445"
+# # #   # User confirms the payment (fills the boolean slot bill_confirmed)
+# # #   - intent: affirm 
+# # #   - active_loop: null
+# # #   - action: action_pay_bill
+
+# # - story: Apply for loan happy path
+# #   steps:
+# #   - intent: apply_for_loan
+# #   - action: loan_form
+# #   - active_loop: loan_form
+# #   # User provides initial slots
+# #   - intent: inform
+# #     entities:
+# #     - loan_type: "home"
+# #     - amount: 100000.00
+# #     - duration: "20 years"
+# #   # User confirms the application (fills the boolean slot loan_confirmed)
+# #   - intent: affirm 
+# #   - active_loop: null
+# #   - action: action_apply_loan
+
+# # # - story: Find branch/ATM happy path
+# # #   steps:
+# # #   - intent: find_branch_atm
+# # #   - action: branch_form
+# # #   - active_loop: branch_form
+# # #   # User provides the required slot
+# # #   - intent: inform
+# # #     entities:
+# # #     - city: "Mumbai"
+# # #   - active_loop: null
+# # #   - action: action_find_branch
+
+# # # ====================================
+# # # B. INTERRUPTION HANDLING
+# # # ====================================
+
+# # # - story: User asks about account number
+# # #   steps:
+# # #   - intent: ask_account_number_location
+# # #   - action: utter_account_number_location
+
+# # - story: User asks about password or PIN update
+# #   steps:
+# #   - intent: ask_password_or_pin_update
+# #   - action: utter_password_or_pin_update
+
+# # - story: User asks how to block debit or credit card
+# #   steps:
+# #   - intent: ask_block_card
+# #   - action: utter_block_card
+
+# # - story: User asks how to get new ATM card
+# #   steps:
+# #   - intent: ask_new_atm_card
+# #   - action: utter_new_atm_card
+
+# # - story: User asks for IFSC code
+# #   steps:
+# #   - intent: ask_ifsc_code
+# #   - action: utter_ifsc_code
+
+# # - story: User asks about KYC update
+# #   steps:
+# #   - intent: ask_kyc_update
+# #   - action: utter_kyc_update
+
+# # - story: User lost debit or credit card
+# #   steps:
+# #   - intent: lost_debit_card
+# #   - action: utter_lost_debit_card
+
+# #   - story: Loan types info
+# #   steps:
+# #   - intent: loan_types
+# #   - action: utter_loan_types
+
+
+
+
+# # # - story: Find ATM or branch location
+# # #   steps:
+# # #   - intent: branch_location
+# # #   - action: action_find_location
+
+
+# # - story: ATM location story
+# #   steps:
+# #     - intent: atm_location
+# #     - action: utter_ask_city
+# #     - intent: provide_city
+# #     - action: action_find_location
+
+
+# # version: "3.1"
+
+# # stories:
+
+# # # ====================================
+# # # A. FUNCTIONAL TESTING: HAPPY PATHS
+# # # ====================================
+
+# # - story: Apply for loan happy path
+# #   steps:
+# #     - intent: apply_for_loan
+# #     - action: loan_form
+# #     - active_loop: loan_form
+# #     - intent: inform
+# #       entities:
+# #         - loan_type: "home"
+# #         - amount: 100000.00
+# #         - duration: "20 years"
+# #     - intent: affirm
+# #     - active_loop: null
+# #     - action: action_apply_loan
+
+
+# # # ====================================
+# # # B. INTERRUPTION HANDLING
+# # # ====================================
+
+# # - story: User asks about password or PIN update
+# #   steps:
+# #     - intent: ask_password_or_pin_update
+# #     - action: utter_password_or_pin_update
+
+# # - story: User asks how to block debit or credit card
+# #   steps:
+# #     - intent: ask_block_card
+# #     - action: utter_block_card
+
+# # - story: User asks how to get new ATM card
+# #   steps:
+# #     - intent: ask_new_atm_card
+# #     - action: utter_new_atm_card
+
+# # - story: User asks for IFSC code
+# #   steps:
+# #     - intent: ask_ifsc_code
+# #     - action: utter_ifsc_code
+
+# # - story: User asks about KYC update
+# #   steps:
+# #     - intent: ask_kyc_update
+# #     - action: utter_kyc_update
+
+# # - story: User lost debit or credit card
+# #   steps:
+# #     - intent: lost_debit_card
+# #     - action: utter_lost_debit_card
+
+
+# # # ====================================
+# # # C. LOAN TYPES INFO (FIXED)
+# # # ====================================
+
+# # - story: Loan types info
+# #   steps:
+# #     - intent: loan_types
+# #     - action: utter_loan_types
+
+
+# # # ====================================
+# # # D. ATM LOCATION STORY
+# # # ====================================
+
+# # - story: ATM location story
+# #   steps:
+# #     - intent: atm_location
+# #     - action: utter_ask_city
+# #     - intent: provide_city
+# #     - action: action_find_location
+
+# version: "3.1"
+
+# stories:
+
+# # ====================================
+# # 1. BASIC BANKING: LOAN INSTRUCTIONS
+# # ====================================
+
+# - story: Provide loan instructions
+#   steps:
+#     - intent: apply_for_loan
+#     - action: utter_apply_for_loan
+
+# - story: Provide loan types info
+#   steps:
+#     - intent: loan_types
+#     - action: utter_loan_types
+
+
+# # ====================================
+# # 2. ACCOUNT & PASSWORD HELP
+# # ====================================
+
+# - story: Password or PIN update info
+#   steps:
+#     - intent: forgot_password
+#     - action: utter_password_or_pin_update
+
+# - story: Account status info
+#   steps:
+#     - intent: check_account_status
+#     - action: utter_account_status
+
+# - story: Report issue guidance
+#   steps:
+#     - intent: report_issue
+#     - action: utter_report_issue
+
+
+# # ====================================
+# # 3. CARD HELP
+# # ====================================
+
+# - story: Block debit or credit card
+#   steps:
+#     - intent: ask_block_card
+#     - action: utter_block_card
+
+# - story: New ATM or debit card info
+#   steps:
+#     - intent: apply_new_card
+#     - action: utter_new_atm_card
+
+# - story: Activate card
+#   steps:
+#     - intent: activate_new_card
+#     - action: utter_activate_card
+
+# - story: Change ATM PIN
+#   steps:
+#     - intent: change_atm_pin
+#     - action: utter_change_pin
+
+# - story: Lost card guidance
+#   steps:
+#     - intent: lost_debit_card
+#     - action: utter_lost_debit_card
+
+# - story: Card limit increase
+#   steps:
+#     - intent: card_limit_increase
+#     - action: utter_card_limit_increase
+
+
+# # ====================================
+# # 4. BILL PAYMENT & REWARDS
+# # ====================================
+
+# - story: Pay bills
+#   steps:
+#     - intent: pay_bill
+#     - action: utter_pay_bill
+
+# - story: Redeem reward points
+#   steps:
+#     - intent: redeem_reward_points
+#     - action: utter_redeem_reward_points
+
+
+# # ====================================
+# # 5. ATM / BRANCH / LOCATION
+# # ====================================
+
+# - story: ATM location
+#   steps:
+#     - intent: atm_location
+#     - action: utter_ask_city
+#     - intent: provide_city
+#     - action: action_find_location
+
+# - story: Branch location
+#   steps:
+#     - intent: branch_location
+#     - action: utter_ask_city
+#     - intent: provide_city
+#     - action: action_find_location
+
+# - story: Ask for IFSC code
+#   steps:
+#     - intent: ask_ifsc_code
+#     - action: utter_ifsc_code
+
+# - story: KYC update info
+#   steps:
+#     - intent: ask_kyc_update
+#     - action: utter_kyc_update
+
+
+# # ====================================
+# # 6. GENERAL CHAT / BOT PERSONALITY
+# # ====================================
+
+# - story: Greeting
+#   steps:
+#     - intent: greet
+#     - action: utter_greet
+
+# - story: Goodbye
+#   steps:
+#     - intent: goodbye
+#     - action: utter_goodbye
+
+# - story: Thank you
+#   steps:
+#     - intent: thank
+#     - action: utter_you_are_welcome
+
+# - story: Bot personality / challenge
+#   steps:
+#     - intent: bot_challenge
+#     - action: utter_bot_identity
+
+# - story: Mood check positive
+#   steps:
+#     - intent: mood_great
+#     - action: utter_happy
+
+# - story: Mood check negative
+#   steps:
+#     - intent: mood_unhappy
+#     - action: utter_unhappy
+
+
+
+
+version: "3.1"
+
+stories:
+
+# ====================================
+# 1. BASIC BANKING: INSTRUCTIONS
+# ====================================
+
+- story: Provide loan instructions
+  steps:
+    - intent: apply_for_loan
+    - action: utter_apply_for_loan
+
+- story: Provide loan types info
+  steps:
+    - intent: loan_types
+    - action: utter_loan_types
+
+# - story: Give check balance instructions (Added for completeness)
+#   steps:
+#     - intent: check_balance
+#     - action: utter_check_balance
+
+- story: Give transfer money instructions (Added for completeness)
+  steps:
+    - intent: transfer_money
+    - action: utter_transfer_instruction
+
+# ====================================
+# 2. ACCOUNT & PASSWORD HELP
+# ====================================
+
+- story: Password or PIN update info
+  steps:
+    - intent: forgot_password
+    - action: utter_forgot_password # Use the more specific utterance defined in domain
+
+- story: Account status info
+  steps:
+    - intent: check_account_status
+    - action: utter_check_account_status # FIX: Changed from utter_account_status
+
+- story: Report issue guidance
+  steps:
+    - intent: report_issue
+    - action: utter_report_issue
+
+
+# ====================================
+# 3. CARD HELP
+# ====================================
+
+- story: Block debit or credit card
+  steps:
+    - intent: ask_block_card
+    - action: utter_block_card
+
+- story: New ATM or debit card info
+  steps:
+    - intent: apply_new_card
+    - action: utter_apply_new_card # FIX: Changed from utter_new_atm_card
+
+- story: Activate card
+  steps:
+    - intent: activate_new_card
+    - action: utter_activate_new_card # FIX: Changed from utter_activate_card
+
+- story: Change ATM PIN
+  steps:
+    - intent: change_atm_pin
+    - action: utter_change_atm_pin # FIX: Changed from utter_change_pin
+
+- story: Lost card guidance
+  steps:
+    - intent: lost_debit_card
+    - action: utter_lost_debit_card
+
+- story: Card limit increase
+  steps:
+    - intent: card_limit_increase
+    - action: utter_card_limit_increase
+
+
+# ====================================
+# 4. BILL PAYMENT & REWARDS
+# ====================================
+
+- story: Pay bills
+  steps:
+    - intent: pay_bill
+    - action: utter_pay_bill
+
+- story: Redeem reward points
+  steps:
+    - intent: redeem_reward_points
+    - action: utter_redeem_reward_points
+
+
+# ====================================
+# 5. ATM / BRANCH / LOCATION (Streamlined for Form)
+# ====================================
+
+- story: ATM location - start form
+  steps:
+    - intent: atm_location
+    - action: utter_ask_city
+    - active_loop: branch_form # Explicitly mark that the form loop is activated
+
+- story: Branch location - start form
+  steps:
+    - intent: branch_location
+    - action: utter_ask_city
+    - active_loop: branch_form # Explicitly mark that the form loop is activated
+
+- story: Ask for IFSC code
+  steps:
+    - intent: ask_ifsc_code
+    - action: utter_ifsc_code
+
+- story: KYC update info
+  steps:
+    - intent: ask_kyc_update
+    - action: utter_kyc_update
+
+
+# ====================================
+# 6. GENERAL CHAT / BOT PERSONALITY
+# ====================================
+
+- story: Greeting
+  steps:
+    - intent: greet
+    - action: utter_greet
+
+- story: Goodbye
+  steps:
+    - intent: goodbye
+    - action: utter_goodbye
+
+- story: Thank you
+  steps:
+    - intent: thank
+    - action: utter_thank # FIX: Changed from utter_you_are_welcome
+
+- story: Bot personality / challenge
+  steps:
+    - intent: bot_challenge
+    - action: utter_iamabot # FIX: Changed from utter_bot_identity
+
+- story: Mood check positive
+  steps:
+    - intent: mood_great
+    - action: utter_mood_great # <-- FIXED
+
+- story: Mood check negative
+  steps:
+    - intent: mood_unhappy
+    - action: utter_mood_unhappy # <-- FIXED
