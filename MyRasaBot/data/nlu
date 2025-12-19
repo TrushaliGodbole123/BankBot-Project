@@ -1,0 +1,682 @@
+version: "3.1"
+nlu:
+
+# -------------------------
+# 1. Basic / Chitchat
+# -------------------------
+- intent: greet
+  examples: |
+    - hi
+    - hello
+    - hey
+    - good morning
+    - hey bankbot
+    - hi there
+
+- intent: goodbye
+  examples: |
+    - bye
+    - goodbye
+    - see you later
+    - talk to you later
+    - got to go
+    - catch you later
+
+- intent: thank
+  examples: |
+    - thanks
+    - thank you
+    - thanks a lot
+    - many thanks
+    - appreciate it
+    - thank you so much
+
+- intent: affirm
+  examples: |
+    - yes
+    - yup
+    - sure
+    - of course
+    - absolutely
+    - correct
+
+- intent: deny
+  examples: |
+    - no
+    - nope
+    - not really
+    - I don't think so
+    - cancel
+    - no thanks
+
+- intent: mood_great
+  examples: |
+    - I'm great
+    - feeling awesome
+    - I'm good
+    - doing well today
+    - I'm happy
+    - all good
+
+- intent: mood_unhappy
+  examples: |
+    - I'm sad
+    - not feeling well
+    - I'm upset
+    - feeling down
+    - I'm unhappy
+    - having a bad day
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - who are you?
+    - are you human?
+    - what are you?
+    - who created you?
+    - are you real
+
+# -------------------------
+# 2. Core banking flows
+# -------------------------
+- intent: check_balance
+  examples: |
+    - check my balance
+    - whats my account balance
+    - show my [savings](account_type) balance
+    - can you tell me my balance
+    - check balance for [current](account_type)
+    - what's my balance now
+    - what is my balance
+    - show my account balance
+    - check balance
+    - how much money i have
+
+- intent: transfer_money
+  examples: |
+    - I want to transfer money
+    - transfer [500](amount) to [Rahul](recipient_name)
+    - send [2000](amount) to [Anjali](recipient_name)
+    - transfer money to a friend
+    - pay [1500](amount) to [Amit](recipient_name)
+    - how do I transfer funds
+
+- intent: pay_bill
+  examples: |
+    - I want to pay my [electricity](bill_type) bill
+    - pay my [internet](bill_type) bill
+    - pay [water](bill_type) bill of [500](amount)
+    - bill payment for [150](amount)
+    - I need to pay my bill
+    - help me pay a bill
+
+- intent: check_transactions
+  examples: |
+    - show my recent transactions
+    - transaction history
+    - list my last 5 transactions
+    - what did I spend last month
+    - show account statement
+    - transaction summary
+
+- intent: get_account_info
+  examples: |
+    - show my account info
+    - what are my account details
+    - give me my account information
+    - account information please
+    - show profile linked to my account
+    - display my account details
+
+- intent: open_account
+  examples: |
+    - I want to open an account
+    - how to open a bank account
+    - open a new account
+    - start a savings account
+    - create bank account
+    - help me open an account
+
+- intent: open_savings_account
+  examples: |
+    - open a [savings](account_type) account
+    - I want to open savings
+    - start a savings account please
+    - how to open a savings account
+    - create savings account
+    - open savings account for me
+
+- intent: open_current_account
+  examples: |
+    - open a [current](account_type) account
+    - I want to open current account
+    - create current account
+    - how to open a current account
+    - open my current account
+    - start a current account
+
+- intent: apply_for_loan
+  examples: |
+    - I want to apply for a loan
+    - how to apply for [home](loan_type) loan
+    - apply for a [personal](loan_type) loan
+    - I need a loan
+    - loan application process
+    - help me apply for a loan
+
+- intent: check_loan_status
+  examples: |
+    - check my loan status
+    - whats the status of my loan
+    - is my loan approved
+    - loan application status
+    - check loan progress
+    - loan status please
+
+- intent: loan_types
+  examples: |
+    - what kind of loans do you have
+    - loan options
+    - types of loans available
+    - do you provide home loan
+    - tell me about loan types
+    - show loan offerings
+
+# -------------------------
+# 3. Cards / PIN / Security
+# -------------------------
+- intent: card_services
+  examples: |
+    - block my credit card
+    - replace my ATM card
+    - card services help
+    - how to block card
+    - debit card problems
+
+- intent: ask_block_card
+  examples: |
+    - how can I block my debit card
+    - I want to block my credit card
+    - my card is stolen, block it
+    - block my ATM card now
+    - help me block the card
+    - lost card - block it
+
+- intent: block_unblock_card
+  examples: |
+    - how do I block my debit card
+    - how to unblock my card
+    - temporary block card
+    - unblock credit card
+    - block my lost card
+    - remove the block from my card
+
+- intent: apply_new_card
+  examples: |
+    - how can I apply for a debit card
+    - I want a new debit card
+    - apply for credit card
+    - how to get a replacement card
+    - order new debit card
+    - request new credit card
+
+- intent: activate_new_card
+  examples: |
+    - how to activate my new card
+    - activate my card
+    - card activation steps
+    - help me activate debit card
+    - I received my card how to activate
+    - activate credit card
+
+- intent: change_atm_pin
+  examples: |
+    - how can I change my ATM PIN
+    - change my card PIN
+    - reset ATM PIN
+    - how to change ATM PIN online
+    - forgot PIN how to reset
+    - update my ATM pin
+
+- intent: lost_debit_card
+  examples: |
+    - I lost my debit card # RESOLVED CONFLICT: Kept only in this specific intent
+    - misplaced my ATM card
+    - my debit card is missing
+    - my card got stolen
+    - I can't find my ATM card
+    - what to do if debit card lost
+    - I have lost my credit card
+    - I have lost my ATM card
+    - What should I do if my debit card is lost?
+
+- intent: card_delivery_status
+  examples: |
+    - when will I get my new debit card
+    - card dispatch status
+    - delivery status of my card
+    - track my card delivery
+    - is my card dispatched
+    - card delivery ETA
+
+- intent: card_limit_increase
+  examples: |
+    - can I increase my credit card limit
+    - raise my card limit
+    - how to increase card limit
+    - request higher credit limit
+    - increase spending limit
+    - card limit increase process
+
+# --- NEWLY ADDED Intents ---
+
+- intent: ask_password_or_pin_update
+  examples: |
+    - how can I update my password
+    - where do I change my ATM PIN
+    - steps to reset online banking password
+    - I need to update my security PIN
+
+- intent: ask_new_atm_card
+  examples: |
+    - how do I request a replacement ATM card
+    - process for getting a new debit card
+    - apply for a new ATM card
+
+- intent: increase_credit_limit
+  examples: |
+    - can I request a higher credit limit
+    - how to increase my card spending limit
+    - request a credit limit review
+    - raise my credit limit
+
+- intent: card_charges
+  examples: |
+    - what are the annual charges for my card
+    - tell me about the credit card fees
+    - what are the charges for foreign transactions
+    - card maintenance fee
+
+- intent: report_unauthorized_transactions
+  examples: |
+    - I want to report unauthorized transactions
+    - flag a suspicious transaction
+    - report fraud on my account
+    - I see fraudulent charges
+
+# -------------------------
+# 4. Payments & limits
+# -------------------------
+- intent: transaction_limit
+  examples: |
+    - what is my daily withdrawal limit
+    - transaction limit per day
+    - how much can I withdraw daily
+    - transfer limit
+    - per transaction limit
+
+- intent: atm_withdrawal_limit
+  examples: |
+    - how much can I withdraw from ATM
+    - ATM withdrawal limit # RESOLVED CONFLICT: Kept only in this specific intent
+    - daily ATM limit
+    - maximum cash at ATM
+    - limit per withdrawal
+    - what is ATM limit
+
+- intent: redeem_reward_points
+  examples: |
+    - how can I redeem my reward points
+    - redeem card points
+    - use my credit card rewards
+    - convert reward points to cash
+    - claim reward points
+    - how to redeem points
+
+# -------------------------
+# 5. Account management / misc
+# -------------------------
+- intent: forgot_password
+  examples: |
+    - I forgot my password
+    - reset my password
+    - can you send password link
+    - forgot login credentials
+    - reset online banking password
+    - password reset please
+
+- intent: report_issue
+  examples: |
+    - I want to report an issue
+    - facing an issue with my account
+    - file a complaint
+    - submit a problem
+    - report technical issue
+    - report fraud
+
+- intent: check_account_status
+  examples: |
+    - is my account active
+    - has my account been blocked
+    - check account status
+    - is my account working
+    - verify account status
+    - has my account been suspended
+
+- intent: apply_cheque_book
+  examples: |
+    - how can I get a new cheque book
+    - request cheque book
+    - order cheque book
+    - apply for cheque book
+    - request a new chequebook
+    - order a cheque book online
+
+- intent: close_account
+  examples: |
+    - I want to close my account
+    - how to close bank account
+    - close my account
+    - request account closure
+    - process to close account
+    - close savings account
+
+- intent: customer_care
+  examples: |
+    - how to contact customer care
+    - customer support number
+    - I want to talk to support
+    - bank helpline
+    - speak to customer care
+    - contact support
+
+- intent: bot_name
+  examples: |
+    - what is your name
+    - who created you
+    - tell me your name
+    - what are you called
+    - who built you
+    - whats your name
+
+- intent: bot_personality
+  examples: |
+    - you are so smart
+    - good job
+    - you are helpful
+    - funny bot
+    - nice assistant
+    - great work
+
+# -------------------------
+# 6. ATM / Branch / Location
+# -------------------------
+- intent: atm_location
+  examples: |
+    - ATM near me
+    - nearest ATM
+    - find ATM near me
+    - show me nearby ATM
+    - ATM in [Nagpur](city)
+    - nearest branch in [Mumbai](city)
+
+- intent: branch_location
+  examples: |
+    - where is the [Mumbai](city) branch
+    - branch address in [Pune](city)
+    - nearest branch in [Delhi](city)
+    - branch near me
+    - locate branch at [Bangalore](city)
+    - branch location in [Chennai](city)
+
+- intent: provide_city
+  examples: |
+    - [Nagpur](city)
+    - [Mumbai](city)
+    - [Pune](city)
+    - I'm in [Delhi](city)
+    - [Bangalore](city)
+    - [Thane](city)
+
+- intent: ask_ifsc_code
+  examples: |
+    - what is the IFSC code of [HDFC](bank)
+    - give me IFSC code for SBI Palghar
+    - what is my branch IFSC code
+    - IFSC for Mumbai branch
+    - tell me IFSC code
+    - I need IFSC code
+
+- intent: ask_kyc_update
+  examples: |
+    - how can I update my KYC
+    - KYC update process
+    - where to submit KYC
+    - can I update KYC online
+    - what documents for KYC update
+    - KYC status check
+
+# --- NEWLY ADDED Intents ---
+
+- intent: check_bank_hours
+  examples: |
+    - what are the branch opening hours
+    - is the bank open on Sunday
+    - what time does the bank close today
+    - check the working hours
+
+- intent: ask_nearest_atm
+  examples: |
+    - show me the absolute nearest ATM
+    - where is the closest cash machine
+    - can you locate the nearest bank ATM
+
+- intent: check_interest_rates
+  examples: |
+    - what are the interest rates for FDs
+    - tell me the current interest rates
+    - interest rate for a personal loan
+    - check my savings account interest
+
+- intent: check_exchange_rates
+  examples: |
+    - what is the exchange rate for USD to INR
+    - check current foreign currency rates
+    - fetch the Euro exchange rate
+    - what is the today's exchange rate
+
+# -------------------------
+# 7. Account number / where to find
+# -------------------------
+- intent: ask_account_number_location
+  examples: |
+    - where is my account number
+    - what is my account number
+    - where can I find my account number
+    - account number location
+    - how to find account number on passbook
+    - where is the account no written
+
+# -------------------------
+# 8. Inform / slot values
+# -------------------------
+- intent: inform
+  examples: |
+    - [savings](account_type)
+    - [current](account_type)
+    - [500](amount)
+    - [1000](amount)
+    - my account number is [1234567890](account_number)
+    - transfer [50](amount) to [Rahul](recipient_name)
+
+# -------------------------
+# 9. Fallback / other
+# -------------------------
+- intent: out_of_scope
+  examples: |
+    - tell me a joke
+    - whats the weather
+    - who is the president
+    - random question
+    - play music
+    - unrelated question
+
+- intent: rephrase
+  examples: |
+    - I didn't get that
+    - can you rephrase
+    - say that again
+    - can you repeat
+    - what did you say
+    - please rephrase
+
+- intent: security_data_protection
+  examples: |
+    - How does the bank protect my personal and financial data?
+    - What measures do you take to secure my information?
+    - Tell me about your data protection policy.
+    - Is my financial data safe with you?
+    - How do you safeguard my private information?
+
+- intent: security_report_fraud
+  examples: |
+    - How can I report a fraudulent transaction or phishing attempt?
+    - I need to report a scam email.
+    - What is the process for reporting fraud?
+    - Where do I report a suspicious transaction?
+    - I think I've been phished, what should I do?
+
+- intent: security_account_compromise
+  examples: |
+    - What should I do if I suspect someone has access to my account?
+    - I think my account has been compromised.
+    - What are the steps if I notice unauthorized access?
+    - How do I freeze my account if I suspect a hack?
+    - My account seems to have been accessed by someone else.
+
+- intent: security_change_password
+  examples: |
+    - How can I change my login password securely?
+    - Guide me through changing my password.
+    - What makes a strong password for online banking?
+    - How often should I change my password?
+    - I need to update my password.
+
+- intent: security_best_practices
+  examples: |
+    - What are the best practices for online banking safety?
+    - Give me tips for secure banking.
+    - How to bank online safely?
+    - What security tips do you recommend?
+
+- intent: security_chatbot_access
+  examples: |
+    - Can the chatbot access my personal information?
+    - Does this bot see my account details?
+    - What data can you, the bot, see?
+    - Do I need to worry about sharing info with the bot?
+
+- intent: security_suspicious_contact
+  examples: |
+    - What should I do if I receive a suspicious call or email claiming to be from the bank?
+    - I got a strange call from someone claiming to be you.
+    - How do I verify if an email from the bank is real?
+    - I received a text asking for my PIN. Is this normal?
+    - What's your policy on asking for sensitive information via email?
+
+- intent: security_enable_2fa
+  examples: |
+    - How do I enable two-factor authentication (2FA)?
+    - Guide me on setting up 2FA.
+    - Is 2FA mandatory?
+    - How do I turn on multi-factor authentication?
+
+- intent: security_fake_website
+  examples: |
+    - What are the signs of a fake banking website?
+    - How can I tell if a website is legitimate?
+    - Tips to spot a fraudulent URL.
+    - How to check if the security certificate is valid?
+
+- intent: security_secure_logout
+  examples: |
+    - How do I securely log out of online banking?
+    - Is closing the browser enough to log out?
+    - What is the best way to sign out?
+
+
+- intent: inquiry_schedule_appointment
+  examples: |
+    - How can I schedule an appointment?
+    - I want to book a meeting with a bank manager.
+    - How do I set up a time to talk to a loan specialist?
+    - Can I schedule a visit to a branch?
+    - Book an appointment please.
+
+# --- New EMI Intent ---
+
+- intent: inquiry_personal_loan_emi
+  examples: |
+    - What are the EMI options available for a personal loan?
+    - Can you tell me about the personal loan EMI plans?
+    - What are the installment options for a personal loan?
+    - How much will my monthly payment be for a personal loan?
+    - Details on personal loan repayment.
+
+- intent: provide_mobile
+  examples: |
+    - 9876543210
+    - my mobile number is 9988776655
+
+- intent: provide_email
+  examples: |
+    - my email is [abc@gmail.com](email)
+    - email is [john123@yahoo.com](email)
+    - [test@gmail.com](email)
+    - here is my email [demo@xyz.com](email)
+    - [trushaligodbole@gmail.com](email)
+
+
+- intent: provide_otp
+  examples: |
+    - 123456
+    - otp is 987654
+    - 123456
+    - 987321
+    - 543210
+    - here is my otp: 123456
+    - otp is 456789
+    - code is 345678
+    - 220730
+
+- intent: check_creditcard_balance
+  examples: |
+    - What is my credit card balance?
+    - Show my credit card balance
+    - Can you tell me my credit card outstanding amount?
+    - How much do I owe on my credit card?
+    - Check my credit card due amount
+    - What is my current credit card bill?
+    - Tell me my credit card dues
+    - I want to know my credit card balance
+
+- intent: friends_account_balance
+  examples: |
+    - can I check my friend's account balance
+    - show my friends balance
+    - check balance of my friend
+    - I want to see someone else's balance
+    - can you check another person’s account balance
+    - can you tell my friend's bank balance
+    - check different account balance
+    - show me Trushali's balance 
+    - i want to see akshali's account balance 
+    - i want to see my friend account balance 
+    - can you tell my friend account balance 
+
+- intent: human_agent 
+  examples: |
+    - human_agent
+    - i want to talk to a human agent
+    - connect me with human agent 
+
