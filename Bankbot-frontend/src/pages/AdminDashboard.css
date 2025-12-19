@@ -1,0 +1,89 @@
+/* FULL SCREEN CENTER ALIGN */
+.admin-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;       /* Horizontal center */
+  justify-content: center;   /* Vertical center */
+  background: #e9f1ff;
+  font-family: "Poppins", sans-serif;
+  padding: 20px;
+  margin: 0;
+}
+
+/* Header */
+.admin-header {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+/* Logout Button */
+.logout-btn {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Main Boxes Container */
+.dashboard-boxes {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Individual Small Box */
+.box {
+  width: 30%;
+  min-width: 220px;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.box:hover {
+  transform: scale(1.05);
+  background: #e3eeff;
+}
+
+/* Content Section */
+.section-content {
+  width: 100%;
+  max-width: 900px;
+  margin-top: 30px;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* Table Design */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #d0d0d0;
+  padding: 10px;
+}
+
+.data-table th {
+  background: #b8d4ff;
+}
