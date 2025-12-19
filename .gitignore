@@ -1,0 +1,5 @@
+.config.py
+Flask_api/.config.py
+.env
+Flask_api/.env
+# .env file to store environment 
