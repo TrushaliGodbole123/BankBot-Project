@@ -1,0 +1,1018 @@
+
+# version: "3.1"
+
+# rules:
+
+# # -----------------------------------------------------------
+# # 1. DEFAULT BEHAVIORS (Simple Intent/Response)
+# # -----------------------------------------------------------
+
+# - rule: Say hi back
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+
+# - rule: Say goodbye
+#   steps:
+#   - intent: goodbye
+#   - action: utter_goodbye
+
+# - rule: Thank the user
+#   steps:
+#   - intent: thank
+#   - action: utter_thank
+
+# - rule: Respond to bot challenge
+#   steps:
+#   - intent: bot_challenge
+#   - action: utter_iamabot
+
+# - rule: Respond to out of scope (ChitChat)
+#   steps:
+#   - intent: out_of_scope
+#   - action: utter_out_of_scope
+
+# - rule: Respond to good mood
+#   steps:
+#   - intent: mood_great
+#   - action: utter_mood_great
+
+# - rule: Respond to bad mood
+#   steps:
+#   - intent: mood_unhappy
+#   - action: utter_mood_unhappy
+
+
+# # -----------------------------------------------------------
+# # 2. CRITICAL FALLBACK FIXES (Prevent generic confusion during forms)
+# # -----------------------------------------------------------
+
+# # Use 'or' with 'nlu_fallback' and 'rephrase' to catch confused and low-confidence inputs
+# # These rules MUST be defined before the generic fallback rules.
+
+# - rule: Handle fallback during Balance Form
+#   condition:
+#   - active_loop: balance_form
+#   steps:
+#   - or:
+#     - intent: nlu_fallback
+#     - intent: rephrase
+#   - action: utter_ask_rephrase 
+#   - action: balance_form
+#   - active_loop: balance_form
+
+# - rule: Handle fallback during Transfer Form
+#   condition:
+#   - active_loop: transfer_form
+#   steps:
+#   - or:
+#     - intent: nlu_fallback
+#     - intent: rephrase
+#   - action: utter_ask_rephrase
+#   - action: transfer_form
+#   - active_loop: transfer_form
+
+# - rule: Handle fallback during Bill Payment Form
+#   condition:
+#   - active_loop: bill_payment_form
+#   steps:
+#   - or:
+#     - intent: nlu_fallback
+#     - intent: rephrase
+#   - action: utter_ask_rephrase
+#   - action: bill_payment_form
+#   - active_loop: bill_payment_form
+
+# - rule: Handle fallback during Loan Form
+#   condition:
+#   - active_loop: loan_form
+#   steps:
+#   - or:
+#     - intent: nlu_fallback
+#     - intent: rephrase
+#   - action: utter_ask_rephrase
+#   - action: loan_form
+#   - active_loop: loan_form
+
+# - rule: Handle fallback during Branch Form
+#   condition:
+#   - active_loop: branch_form
+#   steps:
+#   - or:
+#     - intent: nlu_fallback
+#     - intent: rephrase
+#   - action: utter_ask_rephrase
+#   - action: branch_form
+#   - active_loop: branch_form
+
+# # -----------------------------------------------------------
+# # 3. GENERIC FALLBACK (Runs ONLY when NO form is active)
+# # -----------------------------------------------------------
+
+# - rule: High confidence NLU fallback
+#   # If NLU confidence is below 0.5 (as set in config.yml)
+#   steps:
+#   - intent: nlu_fallback
+#   - action: action_default_fallback
+
+# - rule: Core fallback (Bot uncertainty)
+#   # If Core confidence is below 0.4 (as set in config.yml)
+#   steps:
+#   - action: action_default_fallback
+
+
+# # -----------------------------------------------------------
+# # 4. FORM ACTIVATION RULES (Start the Forms)
+# # -----------------------------------------------------------
+
+# # - rule: Activate Balance Form
+# #   steps:
+# #   - intent: check_balance
+# #   - action: balance_form
+# #   - active_loop: balance_form
+
+
+
+# # - rule: Activate Transfer Form
+# #   steps:
+# #   - intent: transfer_money
+# #   - action: transfer_form
+# #   - active_loop: transfer_form
+
+# # - rule: Activate Bill Payment Form
+# #   steps:
+# #   - intent: pay_bill
+# #   - action: bill_payment_form
+# #   - active_loop: bill_payment_form
+
+# - rule: Activate Loan Form
+#   steps:
+#   - intent: apply_for_loan
+#   - action: loan_form
+#   - active_loop: loan_form
+
+# # - rule: Activate Branch Form
+# #   steps:
+# #   - intent: find_branch_atm
+# #   - action: branch_form
+# #   - active_loop: branch_form
+
+# # -----------------------------------------------------------
+# # 5. FORM SUBMISSION RULES (Run Custom Action after Slots are Filled)
+# # -----------------------------------------------------------
+
+# # - rule: Submit Balance Form
+# #   condition:
+# #   - active_loop: balance_form
+# #   steps:
+# #   - action: balance_form
+# #   - active_loop: null
+# #   - slot_was_set:
+# #     - requested_slot: null
+# #   - action: action_check_balance
+
+# # - rule: Submit Transfer Form
+# #   condition:
+# #   - active_loop: transfer_form
+# #   steps:
+# #   - action: transfer_form
+# #   - active_loop: null
+# #   - slot_was_set:
+# #     - requested_slot: null
+# #   - action: action_transfer_money
+
+# # - rule: Submit Bill Payment Form
+# #   condition:
+# #   - active_loop: bill_payment_form
+# #   steps:
+# #   - action: bill_payment_form
+# #   - active_loop: null
+# #   - slot_was_set:
+# #     - requested_slot: null
+# #   - action: action_pay_bill
+
+# # - rule: Submit Loan Form
+# #   condition:
+# #   - active_loop: loan_form
+# #   steps:
+# #   - action: loan_form
+# #   - active_loop: null
+# #   - slot_was_set:
+# #     - requested_slot: null
+# #   - action: action_apply_loan
+
+# # - rule: Submit Branch Form
+# #   condition:
+# #   - active_loop: branch_form
+# #   steps:
+# #   - action: branch_form
+# #   - active_loop: null
+# #   - slot_was_set:
+# #     - requested_slot: null
+# #   - action: action_find_branch
+
+# # -----------------------------------------------------------
+# # 6. GENERAL INFORMATION RULES (Non-Form Intents)
+# # -----------------------------------------------------------
+
+# - rule: Respond to check transactions
+#   steps:
+#   - intent: check_transactions
+#   - action: utter_check_transactions
+
+# - rule: Respond to open account
+#   steps:
+#   - intent: open_account
+#   - action: utter_open_account
+
+# - rule: Respond to loan status
+#   steps:
+#   - intent: check_loan_status
+#   - action: utter_check_loan_status
+    
+# - rule: Respond to get account info
+#   steps:
+#   - intent: get_account_info
+#   - action: utter_get_account_info
+
+# - rule: Respond to card services
+#   steps:
+#   - intent: card_services
+#   - action: utter_card_services
+
+# - rule: Respond to interest rates
+#   steps:
+#   - intent: check_interest_rates
+#   - action: utter_check_interest_rates
+    
+# - rule: Respond to exchange rates
+#   steps:
+#   - intent: check_exchange_rates
+#   - action: utter_check_exchange_rates
+    
+# - rule: Respond to forgot password
+#   steps:
+#   - intent: forgot_password
+#   - action: utter_forgot_password
+
+# - rule: Respond to report issue
+#   steps:
+#   - intent: report_issue
+#   - action: utter_report_issue
+
+# # - rule: Respond to specific branch location
+# #   steps:
+# #   - intent: branch_location
+# #   - action: utter_ask_city
+
+
+
+# # rules.yml
+
+# - rule: Interrupt Transfer Form to Check Balance
+#   condition:
+#   - active_loop: transfer_form
+#   steps:
+#   - intent: check_balance
+#   - action: action_deactivate_loop
+#   - active_loop: null
+#   - action: balance_form
+#   - active_loop: balance_form
+
+# # - rule: Interrupt Loan Form to Check Balance
+# #   condition:
+# #   - active_loop: loan_form
+# #   steps:
+# #   - intent: check_balance
+# #   - action: action_deactivate_loop
+# #   - active_loop: null
+# #   - action: balance_form
+# #   - active_loop: balance_form
+
+# - rule: Respond to check bank hours
+#   steps:
+#   - intent: check_bank_hours
+#   - action: utter_bank_hours
+
+# - rule: Respond to account number location query
+#   steps:
+#   - intent: ask_account_number_location
+#   - action: utter_account_number_location
+
+# - rule: Respond to password or PIN update query
+#   steps:
+#   - intent: ask_password_or_pin_update
+#   - action: utter_password_or_pin_update
+
+# - rule: Respond to card blocking queries
+#   steps:
+#   - intent: ask_block_card
+#   - action: utter_block_card
+
+# - rule: Respond to new ATM card request
+#   steps:
+#   - intent: ask_new_atm_card
+#   - action: utter_new_atm_card
+
+# - rule: Respond to IFSC code query
+#   steps:
+#   - intent: ask_ifsc_code
+#   - action: utter_ifsc_code
+
+# - rule: Respond to KYC update query
+#   steps:
+#   - intent: ask_kyc_update
+#   - action: utter_kyc_update
+
+# - rule: Respond to lost debit or credit card query
+#   steps:
+#   - intent: lost_debit_card
+#   - action: utter_lost_debit_card
+
+# - rule: Respond to account status check
+#   steps:
+#   - intent: check_account_status
+#   - action: utter_check_account_status
+
+# - rule: Respond to card delivery status
+#   steps:
+#   - intent: card_delivery_status
+#   - action: utter_card_delivery_status
+
+# - rule: Respond to card limit increase
+#   steps:
+#   - intent: card_limit_increase
+#   - action: utter_card_limit_increase
+
+# - rule: Respond to transaction limit query
+#   steps:
+#   - intent: transaction_limit
+#   - action: utter_transaction_limit
+
+# - rule: Respond to cheque book request
+#   steps:
+#   - intent: apply_cheque_book
+#   - action: utter_apply_cheque_book
+
+# - rule: Respond to account closure request
+#   steps:
+#   - intent: close_account
+#   - action: utter_close_account
+
+# - rule: Respond to ATM withdrawal limit query
+#   steps:
+#   - intent: atm_withdrawal_limit
+#   - action: utter_atm_withdrawal_limit
+
+# - rule: Respond to customer care query
+#   steps:
+#   - intent: customer_care
+#   - action: utter_customer_care
+
+# - rule: Respond to bot name query
+#   steps:
+#   - intent: bot_name
+#   - action: utter_bot_name
+
+
+# - rule: Respond to compliments
+#   steps:
+#   - intent: bot_personality
+#   - action: utter_bot_personality
+
+# - rule: Respond to apply new card
+#   steps:
+#   - intent: apply_new_card
+#   - action: utter_apply_new_card
+
+# - rule: Respond to activate new card
+#   steps:
+#   - intent: activate_new_card
+#   - action: utter_activate_new_card
+
+# - rule: Respond to change ATM PIN
+#   steps:
+#   - intent: change_atm_pin
+#   - action: utter_change_atm_pin
+
+# - rule: Respond to increase credit limit
+#   steps:
+#   - intent: increase_credit_limit
+#   - action: utter_increase_credit_limit
+
+# - rule: Respond to card charges
+#   steps:
+#   - intent: card_charges
+#   - action: utter_card_charges
+
+# - rule: Respond to block or unblock card
+#   steps:
+#   - intent: block_unblock_card
+#   - action: utter_block_unblock_card
+
+# - rule: Respond to report unauthorized transactions
+#   steps:
+#   - intent: report_unauthorized_transactions
+#   - action: utter_report_unauthorized_transactions
+
+# - rule: Respond to redeem reward points
+#   steps:
+#   - intent: redeem_reward_points
+#   - action: utter_redeem_reward_points
+
+
+# - rule: Ask city for ATM request
+#   steps:
+#     - intent: atm_location
+#     - action: utter_ask_city
+
+# - rule: Find ATM by city
+#   steps:
+#     - intent: provide_city
+#     - action: action_find_location
+
+# - rule: Give money transfer instructions
+#   steps:
+#   - intent: transfer_money
+#   - action: utter_transfer_instruction
+
+# - rule: Show loan types
+#   steps:
+#   - intent: loan_types
+#   - action: utter_loan_types
+
+
+
+
+
+
+
+version: "3.1"
+
+rules:
+
+# -----------------------------------------------------------
+# 1. DEFAULT BEHAVIORS (Simple Intent/Response)
+# -----------------------------------------------------------
+
+- rule: Say hi back
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- rule: Say goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Thank the user
+  steps:
+  - intent: thank
+  - action: utter_thank
+
+- rule: Respond to bot challenge
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+- rule: Respond to out of scope (ChitChat)
+  steps:
+  - intent: out_of_scope
+  - action: utter_out_of_scope
+
+- rule: Respond to good mood
+  steps:
+  - intent: mood_great
+  - action: utter_mood_great
+  
+- rule: Respond to bad mood
+  steps:
+  - intent: mood_unhappy
+  - action: utter_mood_unhappy
+
+# -----------------------------------------------------------
+# 2. CRITICAL FALLBACK FIXES (Only keep the Branch Form Fallback)
+# -----------------------------------------------------------
+
+- rule: Handle fallback during Branch Form
+  condition:
+  - active_loop: branch_form
+  steps:
+  - or:
+    - intent: nlu_fallback
+    - intent: rephrase
+  - action: utter_ask_rephrase
+  - action: branch_form
+  - active_loop: branch_form
+
+# -----------------------------------------------------------
+# 3. GENERIC FALLBACK (Runs ONLY when NO form is active)
+# -----------------------------------------------------------
+
+- rule: High confidence NLU fallback
+  # If NLU confidence is below 0.5 (as set in config.yml)
+  steps:
+  - intent: nlu_fallback
+  - action: action_default_fallback
+
+- rule: Core fallback (Bot uncertainty)
+  # If Core confidence is below 0.4 (as set in config.yml)
+  steps:
+  - action: action_default_fallback
+
+
+# -----------------------------------------------------------
+# 4. FORM ACTIVATION RULES (Only keep the Branch Form Activation)
+# -----------------------------------------------------------
+
+- rule: Activate Branch Form (find_branch_atm/ask_nearest_atm flow start)
+  steps:
+  - or:
+    - intent: find_branch_atm
+    - intent: ask_nearest_atm
+  - action: utter_ask_city
+  - action: branch_form
+  - active_loop: branch_form
+
+
+# -----------------------------------------------------------
+# 5. FORM SUBMISSION RULES (Only keep the Branch Form Submission)
+# -----------------------------------------------------------
+
+- rule: Submit Branch Form
+  condition:
+  - active_loop: branch_form
+  steps:
+  - action: branch_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_find_location # Use the custom action for location logic
+
+# -----------------------------------------------------------
+# 6. GENERAL INFORMATION RULES (Non-Form/Instructional Intents)
+# -----------------------------------------------------------
+
+
+- rule: Give money transfer instructions
+  steps:
+  - intent: transfer_money
+  - action: utter_transfer_instruction
+
+- rule: Give bill payment instructions
+  steps:
+  - intent: pay_bill
+  - action: utter_pay_bill
+
+- rule: Respond to apply for loan
+  steps:
+  - intent: apply_for_loan
+  - action: utter_apply_for_loan
+  
+- rule: Show loan types (Instructional)
+  steps:
+  - intent: loan_types
+  - action: utter_loan_types
+
+- rule: Respond to check transactions
+  steps:
+  - intent: check_transactions
+  - action: utter_check_transactions
+
+- rule: Respond to open account
+  steps:
+  - intent: open_account
+  - action: utter_open_account
+
+- rule: Respond to loan status
+  steps:
+  - intent: check_loan_status
+  - action: utter_check_loan_status
+    
+- rule: Respond to get account info
+  steps:
+  - intent: get_account_info
+  - action: utter_get_account_info
+
+- rule: Respond to card services
+  steps:
+  - intent: card_services
+  - action: utter_card_services
+
+- rule: Respond to interest rates
+  steps:
+  - intent: check_interest_rates
+  - action: utter_check_interest_rates
+    
+- rule: Respond to exchange rates
+  steps:
+  - intent: check_exchange_rates
+  - action: utter_check_exchange_rates
+    
+- rule: Respond to forgot password
+  steps:
+  - intent: forgot_password
+  - action: utter_forgot_password
+
+- rule: Respond to report issue
+  steps:
+  - intent: report_issue
+  - action: utter_report_issue
+
+- rule: Respond to check bank hours
+  steps:
+  - intent: check_bank_hours
+  - action: utter_bank_hours
+
+- rule: Respond to account number location query
+  steps:
+  - intent: ask_account_number_location
+  - action: utter_account_number_location
+
+- rule: Respond to password or PIN update query
+  steps:
+  - intent: ask_password_or_pin_update
+  - action: utter_password_or_pin_update
+
+- rule: Respond to card blocking queries
+  steps:
+  - intent: ask_block_card
+  - action: utter_block_card
+
+- rule: Respond to new ATM card request
+  steps:
+  - intent: ask_new_atm_card
+  - action: utter_new_atm_card
+
+- rule: Respond to IFSC code query
+  steps:
+  - intent: ask_ifsc_code
+  - action: utter_ifsc_code
+
+- rule: Respond to KYC update query
+  steps:
+  - intent: ask_kyc_update
+  - action: utter_kyc_update
+
+- rule: Respond to lost debit or credit card query
+  steps:
+  - intent: lost_debit_card
+  - action: utter_lost_debit_card
+
+- rule: Respond to account status check
+  steps:
+  - intent: check_account_status
+  - action: utter_check_account_status
+
+- rule: Respond to card delivery status
+  steps:
+  - intent: card_delivery_status
+  - action: utter_card_delivery_status
+
+- rule: Respond to card limit increase
+  steps:
+  - intent: card_limit_increase
+  - action: utter_card_limit_increase
+
+- rule: Respond to transaction limit query
+  steps:
+  - intent: transaction_limit
+  - action: utter_transaction_limit
+
+- rule: Respond to cheque book request
+  steps:
+  - intent: apply_cheque_book
+  - action: utter_apply_cheque_book
+
+- rule: Respond to account closure request
+  steps:
+  - intent: close_account
+  - action: utter_close_account
+
+- rule: Respond to ATM withdrawal limit query
+  steps:
+  - intent: atm_withdrawal_limit
+  - action: utter_atm_withdrawal_limit
+
+- rule: Respond to customer care query
+  steps:
+  - intent: customer_care
+  - action: utter_customer_care
+
+- rule: Respond to bot name query
+  steps:
+  - intent: bot_name
+  - action: utter_bot_name
+
+- rule: Respond to compliments
+  steps:
+  - intent: bot_personality
+  - action: utter_bot_personality
+
+- rule: Respond to apply new card
+  steps:
+  - intent: apply_new_card
+  - action: utter_apply_new_card
+
+- rule: Respond to activate new card
+  steps:
+  - intent: activate_new_card
+  - action: utter_activate_new_card
+
+- rule: Respond to change ATM PIN
+  steps:
+  - intent: change_atm_pin
+  - action: utter_change_atm_pin
+
+- rule: Respond to increase credit limit
+  steps:
+  - intent: increase_credit_limit
+  - action: utter_increase_credit_limit
+
+- rule: Respond to card charges
+  steps:
+  - intent: card_charges
+  - action: utter_card_charges
+
+- rule: Respond to block or unblock card
+  steps:
+  - intent: block_unblock_card
+  - action: utter_block_unblock_card
+
+- rule: Respond to report unauthorized transactions
+  steps:
+  - intent: report_unauthorized_transactions
+  - action: utter_report_unauthorized_transactions
+
+- rule: Respond to redeem reward points
+  steps:
+  - intent: redeem_reward_points
+  - action: utter_redeem_reward_points
+
+- rule: Find ATM/Branch by providing city directly
+  steps:
+  - intent: provide_city
+  - action: action_find_location
+
+- rule: Respond to specific branch location
+  steps:
+  - intent: branch_location
+  - action: utter_ask_city
+  
+- rule: Ask city for ATM request
+  steps:
+  - intent: atm_location
+  - action: utter_ask_city
+
+- rule: Respond to data protection query
+  steps:
+  - intent: security_data_protection
+  - action: utter_security_data_protection
+
+- rule: Respond to report fraud query
+  steps:
+  - intent: security_report_fraud
+  - action: utter_security_report_fraud
+
+- rule: Respond to account compromise query
+  steps:
+  - intent: security_account_compromise
+  - action: utter_security_account_compromise
+
+- rule: Respond to change password query
+  steps:
+  - intent: security_change_password
+  - action: utter_security_change_password
+
+- rule: Respond to best practices query
+  steps:
+  - intent: security_best_practices
+  - action: utter_security_best_practices
+
+- rule: Respond to chatbot access query
+  steps:
+  - intent: security_chatbot_access
+  - action: utter_security_chatbot_access
+
+- rule: Respond to suspicious contact query
+  steps:
+  - intent: security_suspicious_contact
+  - action: utter_security_suspicious_contact
+
+- rule: Respond to enable 2FA query
+  steps:
+  - intent: security_enable_2fa
+  - action: utter_security_enable_2fa
+
+- rule: Respond to fake website query
+  steps:
+  - intent: security_fake_website
+  - action: utter_security_fake_website
+
+- rule: Respond to secure logout query
+  steps:
+  - intent: security_secure_logout
+  - action: utter_security_secure_logout
+
+
+- rule: Respond to appointment scheduling inquiry
+  steps:
+  - intent: inquiry_schedule_appointment
+  - action: utter_inquiry_schedule_appointment
+
+- rule: Respond to personal loan EMI options
+  steps:
+  - intent: inquiry_personal_loan_emi
+  - action: utter_inquiry_personal_loan_emi
+
+# - rule: ask mobile before balance
+#   steps:
+#     - intent: check_balance
+#     - action: utter_ask_mobile
+
+# - rule: Start authentication
+#   steps:
+#     - intent: check_balance
+#     - action: auth_form
+#     - active_loop: auth_form
+
+# - rule: After mobile ask email
+#   steps:
+#     - intent: provide_mobile
+#     - action: action_verify_mobile
+#     - action: utter_mobile_masked
+#     - action: utter_ask_email
+
+
+# # ---------------------------
+# # 7️⃣ After auth → show balance
+# # ---------------------------
+# - rule: Show balance after verification
+#   steps:
+#     - intent: check_balance
+#     - slot_was_set:
+#         - email_verified: true
+#     - action: action_check_balance
+
+# # ---------------------------
+# # 8️⃣ After auth → credit card balance
+# # ---------------------------
+# - rule: Show creditcard balance after verification
+#   steps:
+#     - intent: check_creditcard_balance
+#     - slot_was_set:
+#         - email_verified: true
+#     - action: action_check_creditcard_balance
+
+# - rule: Activate Auth Form when asking for protected actions
+#   description: Block sensitive intents (like balance check) until verified.
+#   # Condition: Only activate if otp_verified slot is NOT set (user is not logged in)
+#   condition:
+#   - slot_was_set:
+#     - otp_verified: null 
+#   - active_loop: null
+#   steps:
+#   - intent: check_balance # Catches intents like "what is my balance"
+#   - action: auth_form
+#   - active_loop: auth_form
+
+# - rule: Submit Auth Form and check balance
+#   description: Handles successful form completion by running the protected action.
+#   condition:
+#   - active_loop: auth_form
+#   steps:
+#   - action: auth_form
+#   - active_loop: null
+#   # Slot is set by the form validator in actions.py if OTP is correct
+#   - slot_was_set:
+#     - otp_verified: true
+#   # action_submit_auth contains a FollowupAction to action_check_balance
+#   - action: action_submit_auth 
+  
+# - rule: Allow sensitive actions if already verified
+#   description: If the user is verified, run the protected action immediately.
+#   condition:
+#   - slot_was_set:
+#     - otp_verified: true
+#   steps:
+#   - intent: check_balance
+#   - action: action_check_balance # Runs the protected action directly
+
+
+# - rule: Activate Auth Form when asking for protected actions
+#   description: Block sensitive intents (like balance check) until verified via the auth_form.
+#   condition:
+#   # The form should only be activated if the OTP hasn't been verified yet.
+#   - slot_was_set:
+#     - otp_verified: null 
+#   - active_loop: null
+#   steps:
+#   - intent: check_balance # Triggers for checking any type of balance
+#   - action: auth_form
+#   - active_loop: auth_form
+
+# - rule: Submit Auth Form and check balance
+#   description: Runs authentication actions, then follows up with the protected action.
+#   condition:
+#   - active_loop: auth_form
+#   steps:
+#   - action: auth_form
+#   - active_loop: null
+#   # The action_submit_auth in actions.py will automatically trigger action_check_balance
+#   # using a FollowupAction if the OTP verification was successful.
+#   - slot_was_set:
+#     - otp_verified: true
+#   - action: action_submit_auth 
+  
+# - rule: Allow sensitive actions if already verified (Fallback/Future Intent)
+#   description: If the user is already verified (slot is set), they can skip the form.
+#   condition:
+#   - slot_was_set:
+#     - otp_verified: true
+#   steps:
+#   - intent: check_balance
+#   - action: action_check_balance # Runs the protected action directly
+
+# ----------------------------------------------------
+# 1) EMAIL AUTHENTICATION START — For check balance
+# ----------------------------------------------------
+- rule: Start email authentication for balance
+  steps:
+    - intent: check_balance
+    - action: utter_ask_email
+
+# ----------------------------------------------------
+# 2) USER PROVIDES EMAIL → send OTP
+# ----------------------------------------------------
+- rule: Send OTP after email
+  condition:
+    - slot_was_set:
+        - otp_verified: false
+  steps:
+    - intent: provide_email
+    - action: action_send_otp
+
+# ----------------------------------------------------
+# 3) USER ENTERS OTP → VERIFY OTP
+# ----------------------------------------------------
+- rule: Verify OTP
+  condition:
+    - slot_was_set:
+        - otp_verified: false
+  steps:
+    - intent: provide_otp
+    - action: action_verify_otp
+
+# ----------------------------------------------------
+# 4) AFTER SUCCESSFUL VERIFICATION, SHOW BALANCE
+# ----------------------------------------------------
+- rule: Show balance after OTP verified
+  condition:
+    - slot_was_set:
+        - otp_verified: true
+  steps:
+    - intent: check_balance
+    - action: action_check_balance
+
+# ----------------------------------------------------
+# 5) Same session → credit card balance WITHOUT OTP
+# ----------------------------------------------------
+- rule: Show credit card balance without OTP if already verified
+  condition:
+    - slot_was_set:
+        - otp_verified: true
+  steps:
+    - intent: check_creditcard_balance
+    - action: action_check_creditcard_balance
+
+# ----------------------------------------------------
+# 6) Credit card balance (if NOT verified)
+# ----------------------------------------------------
+- rule: Ask email again for credit card balance (not verified)
+  condition:
+    - slot_was_set:
+        - otp_verified: false
+  steps:
+    - intent: check_creditcard_balance
+    - action: utter_ask_email
+
+- rule: Verify OTP after user enters it
+  steps:
+    - intent: provide_otp
+    - action: action_verify_otp
+
+- rule: After showing balance do not fallback
+  steps:
+    - action: action_verify_otp
+    - action: action_listen
+
+
+- rule: respond to friends balance check
+  steps:
+    - intent: friends_account_balance
+    - action: utter_friends_balance_security
+
+- rule: connect to human agent
+  steps:
+    - intent: human_agent
+    - action: utter_human_agent
